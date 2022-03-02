@@ -5,11 +5,12 @@ import json
 if __name__ == '__main__':
 
     # open cyltek file
-    with open('cyltek.sh', mode='r') as f:
+    with open('content.txt', mode='r') as f:
         words = f.read()
         
     words = words.replace('\r', '')
-    #print(words)
+    #words = words.replace(r'"', r'\"')
+    print(words)
 
     # open config file
     with open("config.json") as f:
@@ -23,8 +24,9 @@ if __name__ == '__main__':
     com.send_data('\n')
     com.send_data('root\n')
     com.send_data('cd /data\n')
-    com.send_data('echo "'+ words + '" > cyltek.sh\n')
-    com.send_data('chmod 777 cyltek.sh\n')
+    com.send_data("""echo '""" + words + """' > """ + config["target"] + """\n""")
+    com.send_data('chmod 777 ' + config["target"] + '\n')
+    com.send_data('reboot\n')
     
     # com.get_data(50)
     com.close()
