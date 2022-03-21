@@ -2,22 +2,24 @@
 import logging
 
 class Logger:
-    def __init__(self, path, clevel = logging.DEBUG, Flevel = logging.DEBUG):
+    def __init__(self, path, clevel = logging.NOTSET, Flevel = logging.DEBUG):
         self.logger = logging.getLogger(path)
         self.logger.setLevel(logging.DEBUG)
         fmt = logging.Formatter('[%(asctime)s] [%(levelname)s] %(message)s', '%Y-%m-%d %H:%M:%S')
         
         #Setting CMD log
-        sh = logging.StreamHandler()
-        sh.setFormatter(fmt)
-        sh.setLevel(clevel)
-        self.logger.addHandler(sh)
+        if (clevel != logging.NOTSET):
+            sh = logging.StreamHandler()
+            sh.setFormatter(fmt)
+            sh.setLevel(clevel)
+            self.logger.addHandler(sh)
 
         #Setting log file
-        fh = logging.FileHandler(path)
-        fh.setFormatter(fmt)
-        fh.setLevel(Flevel)
-        self.logger.addHandler(fh)
+        if (Flevel != logging.NOTSET):
+            fh = logging.FileHandler(path)
+            fh.setFormatter(fmt)
+            fh.setLevel(Flevel)
+            self.logger.addHandler(fh)
  
     def debug(self, message):
         self.logger.debug(message)
@@ -26,7 +28,7 @@ class Logger:
         self.logger.info(message)
  
     def warn(self, message):
-        self.logger.warn(message)
+        self.logger.warning(message)
  
     def error(self, message):
         self.logger.error(message)

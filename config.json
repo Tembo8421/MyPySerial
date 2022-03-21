@@ -1,5 +1,6 @@
 {
     "name": "COM7",
     "baud": 921600,
+    "source": "content.txt",
     "target": "/data/wifi/wpa_supplicant.conf"
 }
